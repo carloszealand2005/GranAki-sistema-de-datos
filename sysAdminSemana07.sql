@@ -172,7 +172,7 @@ COMMENT ON COLUMN Transaccion.id_cliente IS 'Cliente que realizó la compra (cla
 COMMENT ON COLUMN Transaccion.id_tienda IS 'Tienda en la que se realizó la transacción (clave foránea).';
 
 -------------DETALLE TRANSACCION
-COMMENT ON TABLE DetalleTransaccion IS 'Representa el detalle de productos incluidos en una transacción.';
+COMMENT ON TABLE DetalleTransaccion IS 'Representa el detalle de productos incluidos en una transacción. Tiene una llave primaria compuesta (producto & transaccion)';
 
 COMMENT ON COLUMN DetalleTransaccion.id_producto IS 'Producto incluido en la transacción (clave foránea).';
 COMMENT ON COLUMN DetalleTransaccion.id_transaccion IS 'Transacción a la que pertenece el detalle (clave foránea).';
