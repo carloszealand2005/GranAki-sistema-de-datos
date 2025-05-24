@@ -27,7 +27,7 @@ CREATE TABLE Empleado (
     email VARCHAR(30),
     fecha_ingreso DATE,
     direccion VARCHAR(50),
-    sueldo DECIMAL(8,2),
+    sueldo DECIMAL(8,2) CHECK (sueldo >= 200),
     id_tienda NUMBER,
     FOREIGN KEY (id_departamento) REFERENCES Departamento(id_departamento),
     FOREIGN KEY (id_tienda) REFERENCES GranAki(id_tienda)
@@ -45,7 +45,7 @@ CREATE TABLE Producto (
     nombre VARCHAR(50) NOT NULL,
     categoria NUMBER,
     precio_unitario DECIMAL(6,2) NOT NULL,
-    stock INT,
+    stock INT CHECK (stock >= 0),
     fecha_expiracion DATE,
     id_tienda NUMBER, -- ID de la tienda al que pertenece este producto
     FOREIGN KEY (categoria) REFERENCES CategoriaProducto(id_categoria),
@@ -71,7 +71,7 @@ CREATE TABLE MetodoPago (
 CREATE TABLE Transaccion (
     id_transaccion NUMBER PRIMARY KEY,
     fecha TIMESTAMP NOT NULL,
-    total DECIMAL(6,2) NOT NULL,
+    total DECIMAL(6,2) NOT NULL check (total >= 0),
     id_metodo NUMBER,
     id_cliente NUMBER,
     id_tienda NUMBER,
@@ -84,8 +84,8 @@ CREATE TABLE Transaccion (
 CREATE TABLE DetalleTransaccion (
     id_producto NUMBER NOT NULL,
     id_transaccion NUMBER NOT NULL,
-    cantidad NUMBER NOT NULL,
-    subtotal DECIMAL(6,2) NOT NULL,
+    cantidad NUMBER NOT NULL check (cantidad >= 0),
+    subtotal DECIMAL(6,2) NOT NULL check (subtotal >= 0),
     PRIMARY KEY (id_producto, id_transaccion),
     FOREIGN KEY (id_producto) REFERENCES Producto(id_producto),
     FOREIGN KEY (id_transaccion) REFERENCES Transaccion(id_transaccion)
