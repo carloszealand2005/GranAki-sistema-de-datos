@@ -4,7 +4,7 @@
 CREATE TABLE Departamento (
     id_departamento NUMBER PRIMARY KEY,
     nombre_departamento VARCHAR(50) NOT NULL
-);
+) TABLESPACE GRANAKI_TBS_DATA;
 
 
 
@@ -17,7 +17,7 @@ CREATE TABLE GranAki (
     manager VARCHAR(30) NOT NULL,
     fecha_apertura DATE NOT NULL,
     horario VARCHAR(50)
-);
+) TABLESPACE GRANAKI_TBS_DATA;
 
 -- Tabla Empleado
 CREATE TABLE Empleado (
@@ -31,13 +31,13 @@ CREATE TABLE Empleado (
     id_tienda NUMBER,
     FOREIGN KEY (id_departamento) REFERENCES Departamento(id_departamento),
     FOREIGN KEY (id_tienda) REFERENCES GranAki(id_tienda)
-);
+) TABLESPACE GRANAKI_TBS_DATA;
 
 -- Tabla CategoriaProducto
 CREATE TABLE CategoriaProducto (
     id_categoria NUMBER PRIMARY KEY,
     categoria VARCHAR(50) NOT NULL
-);
+) TABLESPACE GRANAKI_TBS_DATA;
 
 -- Tabla Producto
 CREATE TABLE Producto (
@@ -50,7 +50,7 @@ CREATE TABLE Producto (
     id_tienda NUMBER, -- ID de la tienda al que pertenece este producto
     FOREIGN KEY (categoria) REFERENCES CategoriaProducto(id_categoria),
     FOREIGN KEY (id_tienda) REFERENCES GranAki(id_tienda)
-);
+) TABLESPACE GRANAKI_TBS_DATA;
 
 -- Tabla Cliente
 CREATE TABLE Cliente (
@@ -58,14 +58,14 @@ CREATE TABLE Cliente (
     nombre VARCHAR(50) NOT NULL,
     telefono VARCHAR(20),
     email VARCHAR(35)
-);
+) TABLESPACE GRANAKI_TBS_DATA;
 
 -- Tabla MetodoPago
 CREATE TABLE MetodoPago (
     id_metodo NUMBER PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
     descripcion VARCHAR(100)
-);
+) TABLESPACE GRANAKI_TBS_DATA;
 
 -- Tabla Transaccion
 CREATE TABLE Transaccion (
@@ -78,7 +78,7 @@ CREATE TABLE Transaccion (
     FOREIGN KEY (id_metodo) REFERENCES MetodoPago(id_metodo),
     FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente),
     FOREIGN KEY (id_tienda) REFERENCES GranAki(id_tienda)
-);
+) TABLESPACE GRANAKI_TBS_DATA;
 
 -- Tabla DetalleTransaccion
 CREATE TABLE DetalleTransaccion (
@@ -89,7 +89,7 @@ CREATE TABLE DetalleTransaccion (
     PRIMARY KEY (id_producto, id_transaccion),
     FOREIGN KEY (id_producto) REFERENCES Producto(id_producto),
     FOREIGN KEY (id_transaccion) REFERENCES Transaccion(id_transaccion)
-);
+) TABLESPACE GRANAKI_TBS_DATA;
 
 ----------------- Diccionario de datos:----------------
 
