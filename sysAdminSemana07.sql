@@ -91,6 +91,35 @@ CREATE TABLE DetalleTransaccion (
     FOREIGN KEY (id_transaccion) REFERENCES Transaccion(id_transaccion)
 ) TABLESPACE GRANAKI_TBS_DATA;
 
+
+
+
+-----Creación de índices para atributos importantes: 
+-- Empleado(LLAVES FORANEAS)
+CREATE INDEX idx_empleado_id_departamento ON Empleado(id_departamento) TABLESPACE GRANAKI_TBS_INDEX;
+CREATE INDEX idx_empleado_id_tienda ON Empleado(id_tienda) TABLESPACE GRANAKI_TBS_INDEX;
+
+-- Producto(LLAVES FORANEAS)
+CREATE INDEX idx_producto_categoria ON Producto(categoria) TABLESPACE GRANAKI_TBS_INDEX;
+CREATE INDEX idx_producto_id_tienda ON Producto(id_tienda) TABLESPACE GRANAKI_TBS_INDEX;
+
+-- Transaccion(LLAVES FORANEAS)
+CREATE INDEX idx_transaccion_id_metodo ON Transaccion(id_metodo) TABLESPACE GRANAKI_TBS_INDEX;
+CREATE INDEX idx_transaccion_id_cliente ON Transaccion(id_cliente) TABLESPACE GRANAKI_TBS_INDEX;
+CREATE INDEX idx_transaccion_id_tienda ON Transaccion(id_tienda) TABLESPACE GRANAKI_TBS_INDEX;
+
+-- DetalleTransaccion(LLAVES FORANEAS)
+CREATE INDEX idx_dt_id_producto ON DetalleTransaccion(id_producto) TABLESPACE GRANAKI_TBS_INDEX;
+CREATE INDEX idx_dt_id_transaccion ON DetalleTransaccion(id_transaccion) TABLESPACE GRANAKI_TBS_INDEX;
+
+--EXTRAS
+CREATE INDEX idx_cliente_nombre ON Cliente(nombre) TABLESPACE GRANAKI_TBS_INDEX;
+CREATE INDEX idx_producto_nombre ON Producto(nombre) TABLESPACE GRANAKI_TBS_INDEX;
+CREATE INDEX idx_transaccion_fecha ON Transaccion(fecha) TABLESPACE GRANAKI_TBS_INDEX;
+------------------------
+
+
+
 ----------------- Diccionario de datos:----------------
 
 
@@ -172,7 +201,7 @@ COMMENT ON COLUMN Transaccion.id_cliente IS 'Cliente que realizó la compra (cla
 COMMENT ON COLUMN Transaccion.id_tienda IS 'Tienda en la que se realizó la transacción (clave foránea).';
 
 -------------DETALLE TRANSACCION
-COMMENT ON TABLE DetalleTransaccion IS 'Representa el detalle de productos incluidos en una transacción. Tiene una llave primaria compuesta (producto & transaccion)';
+COMMENT ON TABLE DetalleTransaccion IS 'Representa el detalle de productos incluidos en una transaccion. Tiene una llave primaria compuesta (producto y transaccion)';
 
 COMMENT ON COLUMN DetalleTransaccion.id_producto IS 'Producto incluido en la transacción (clave foránea).';
 COMMENT ON COLUMN DetalleTransaccion.id_transaccion IS 'Transacción a la que pertenece el detalle (clave foránea).';
