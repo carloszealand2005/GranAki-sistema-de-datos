@@ -2,7 +2,7 @@
 
 ----TRANSACCION CUANDO SE COMPRA UN PRODUCTO
 DECLARE
-    v_id_transaccion NUMBER := 1; --ID de esta transacción que se llevará a cabo 
+    v_id_transaccion NUMBER := 2; --ID de esta transacción que se llevará a cabo 
     id_cliente NUMBER := 1; --Cliente de ejemplo: Carlos
     id_metodo_pago NUMBER := 1; --Metodo de pago: Efectivo
     id_tienda NUMBER := 1; --Gran Aki donde se está llevando a cabo la transacción
@@ -29,8 +29,6 @@ BEGIN
     UPDATE Producto SET stock = stock - 2 WHERE id_producto = id_producto1;
     UPDATE Producto SET stock = stock - 1 WHERE id_producto = id_producto2;
 
-
-
     COMMIT;
 
 EXCEPTION
@@ -41,8 +39,8 @@ END;
 
 
 ---CONFIRMACIONES
----Consultar el detalle transaccion que se llevó a cabo
-SELECT * FROM DetalleTransaccion WHERE id_transaccion
+---Consultar todas las transacciones de todo el sistema
+SELECT * FROM DetalleTransaccion
 
 ---Seleccionar las transacciones y el GRAN AKI al que pertenencen 
 SELECT t.fecha, t.total, ga.nombre FROM transaccion t
@@ -69,3 +67,10 @@ SELECT c.nombre, t.id_transaccion, t.fecha, t.total
 FROM transaccion t
 JOIN cliente c ON t.id_cliente = c.id_cliente
 WHERE c.id_cliente = 1;
+
+
+commit;
+
+--Consultar productos en stock:
+SELECT p.*, g.nombre FROM producto p
+JOIN GranAki g ON p.id_tienda = g.id_tienda;

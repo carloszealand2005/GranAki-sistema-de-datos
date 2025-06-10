@@ -1,7 +1,7 @@
 ---- Script para consultas
 
 SELECT * FROM GranAki;
-SELECT * FROM USER_OBJECTS;
+SELECT * FROM USER_TABLES;
 INSERT INTO GranAki VALUES (1, 'Gran Aki 1', 'Juan de Alderete', 'Loja', '=)', 
 TO_DATE('2015-01-01', 'YYYY-MM-DD'),'8am-8pm LUNES-SABADO y 8am-4pm DOMINGO');
 
@@ -137,3 +137,52 @@ VALUES (12, 'Café molido 250g', 3, 3.30, 30, TO_DATE('2025-10-10', 'YYYY-MM-DD'
 
 SELECT * FROM producto;
 
+
+---Eliminar los datos previamente insertados:
+
+DELETE FROM GranAki;
+
+DELETE FROM departamento;
+
+DELETE FROM cliente;
+
+DELETE FROM empleado;
+
+DELETE FROM producto;
+
+DELETE FROM categoriaProducto;
+
+DELETE FROM MetodoPago;
+
+SELECT * FROM cliente;
+
+
+----- TRANSACCIONES BASADAS EN EL LABORATORIO 1:
+
+---1. INSERTAR NUEVO CLIENTE
+INSERT INTO Cliente VALUES (7, 'Aaron', null, 'aaronrobles69420@gmail.com');
+
+---2. INSERTAR UN NUEVO PRODUCTO
+INSERT INTO Producto (id_producto, nombre, categoria, precio_unitario, stock, fecha_expiracion, id_tienda)
+VALUES (11, 'Jugo de naranja 1L', 5, 1.50, 45, TO_DATE('2025-11-05', 'YYYY-MM-DD'), 1);
+
+-- Crear un rol para cajeros que solo insertan transacciones
+CREATE ROLE cajero;
+
+-- Otorgar privilegios mínimos
+GRANT INSERT ON Transaccion TO cajero;
+GRANT INSERT ON DetalleTransaccion TO cajero;
+
+
+
+-- Auditoría básica: registrar eliminaciones de productos
+CREATE OR REPLACE TRIGGER auditoria_delete_producto
+BEFORE DELETE ON Producto
+FOR EACH ROW
+BEGIN
+    INSERT INTO AuditoriaProducto (id_producto, fecha, operacion)
+    VALUES (:OLD.id_producto, SYSDATE, 'DELETE');
+END;
+
+---Revocar SELECT a un cajero para los clientes, ya que no necesita saber el listado de todos:
+REVOKE SELECT ON Cliente FROM cajero;
